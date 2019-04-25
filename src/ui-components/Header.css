@@ -12,6 +12,10 @@
   background-color: var(--primary-color);
 }
 
+.Header__placeholder {
+  height: var(--header-height);
+}
+
 .Header__text {
   color: var(--secondary-text-color);
   font-style: var(--h1-font-size);
