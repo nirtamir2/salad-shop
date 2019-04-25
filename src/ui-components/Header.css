@@ -18,6 +18,7 @@
 
 .Header__text {
   color: var(--secondary-text-color);
+  text-decoration: none;
   font-style: var(--h1-font-size);
   font-weight: var(--bold-font-weight);
 }

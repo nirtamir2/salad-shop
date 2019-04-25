@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import "./Header.css";
 
 function Header() {
@@ -6,7 +7,11 @@ function Header() {
     <>
       <div className="Header__placeholder" />
       <header className="Header">
-        <h1 className="Header__text">Store</h1>
+        <h1>
+          <NavLink to="/" className="Header__text">
+            Store
+          </NavLink>
+        </h1>
       </header>
     </>
   );
