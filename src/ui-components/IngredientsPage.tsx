@@ -10,7 +10,8 @@ function IngredientsPage() {
     ingredients,
     fetchIngredients,
     order,
-    addUserOrderItem
+    addUserOrderItem,
+    deleteOrderItem
   } = ingredientsContext;
 
   React.useEffect(() => {
@@ -60,7 +61,25 @@ function IngredientsPage() {
             {formattedOrder.map(o => {
               return (
                 <li key={o.title}>
-                  {o.title} x {o.count} = {o.count * o.priceInUsd}$
+                  <div>
+                    <button
+                      onClick={() => {
+                        addUserOrderItem(o.title);
+                      }}
+                    >
+                      +
+                    </button>
+                    <button
+                      onClick={() => {
+                        deleteOrderItem(o.title);
+                      }}
+                    >
+                      -
+                    </button>
+                    <div>
+                      {o.title} x {o.count} = {o.count * o.priceInUsd}$
+                    </div>
+                  </div>
                 </li>
               );
             })}

@@ -1,6 +1,7 @@
 import React from "react";
 import useIsMounted from "./hooks/useIsMounted";
 import { IIngredient, IngredientsContext } from "./IngredientsContext";
+import { SALAD_INGREDIENTS_URL } from "../constants/constants";
 
 interface IProps {
   children: React.ReactNode;
@@ -26,12 +27,14 @@ function IngredientsProvider(props: IProps) {
   const fetchIngredients = React.useCallback(() => {
     (async function() {
       try {
-        const res = await fetch("salad.json");
+        const res = await fetch(SALAD_INGREDIENTS_URL);
         if (!isMounted) return;
         if (!res.ok) {
           if (process.env.NODE_ENV !== "production") {
             console.error(
-              "IngredientsProvider#fetchIngredients() - Response error",
+              `IngredientsProvider#fetchIngredients() - Response with status ${
+                res.status
+              }`,
               res
             );
           }
@@ -51,7 +54,7 @@ function IngredientsProvider(props: IProps) {
         } catch (e) {
           if (process.env.NODE_ENV !== "production") {
             console.error(
-              "IngredientsProvider#fetchIngredients() - Parse error",
+              "IngredientsProvider#fetchIngredients() - Parsing error",
               e
             );
           }
@@ -80,13 +83,17 @@ function IngredientsProvider(props: IProps) {
 
   const deleteOrderItem = React.useCallback((id: string) => {
     setOrder(o => {
-      const count = o.get(id) || 0;
-      if (count === 0) {
+      if (!o.has(id)) {
         return o;
       }
 
+      const count = o.get(id) || 0;
       const order = new Map(o);
-      order.set(id, count - 1);
+      if (count === 1) {
+        order.delete(id);
+      } else {
+        order.set(id, count - 1);
+      }
       return order;
     });
   }, []);
