@@ -1,5 +1,9 @@
 @import "./../index.css";
 
+.HomePage {
+  margin: var(--gutter);
+}
+
 .HomePage-title {
   font-size: var(--h1-font-size);
 }

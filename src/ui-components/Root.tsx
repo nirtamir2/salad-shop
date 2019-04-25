@@ -1,11 +1,14 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
+import IngredientsProvider from "./IngredientsProvider";
 import App from "./App";
 
 function Root() {
   return (
     <BrowserRouter>
-      <App />
+      <IngredientsProvider>
+        <App />
+      </IngredientsProvider>
     </BrowserRouter>
   );
 }

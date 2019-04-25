@@ -1,7 +1,6 @@
 @import "./../index.css";
 
 .Card {
-  margin: var(--gutter);
   padding: calc(var(--gutter) * 2);
 
   display: grid;
