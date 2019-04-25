@@ -28,13 +28,6 @@ function IngredientsPage() {
     return arr;
   }, [ingredients, order]);
 
-  function handleIngredientClick(ingredient: {
-    title: string;
-    priceInUsd: number;
-  }) {
-    addUserOrderItem(ingredient.title);
-  }
-
   return (
     <div className="IngredientsPage">
       {ingredients.length === 0 ? (
@@ -48,7 +41,8 @@ function IngredientsPage() {
                 key={i.title}
                 priceInUsd={i.priceInUsd}
                 title={i.title}
-                onClick={() => handleIngredientClick(i)}
+                onAdd={() => addUserOrderItem(i.title)}
+                onDelete={() => deleteOrderItem(i.title)}
               />
             );
           })}
@@ -64,24 +58,8 @@ function IngredientsPage() {
                   return (
                     <li key={o.title}>
                       <div>
-                        <button
-                          onClick={() => {
-                            addUserOrderItem(o.title);
-                          }}
-                        >
-                          +
-                        </button>
-                        <button
-                          onClick={() => {
-                            deleteOrderItem(o.title);
-                          }}
-                        >
-                          -
-                        </button>
-                        <div>
-                          {o.title} x {o.count} ={" "}
-                          {(o.count * o.priceInUsd).toFixed(2)}$
-                        </div>
+                        {o.title} x {o.count} ={" "}
+                        {(o.count * o.priceInUsd).toFixed(2)}$
                       </div>
                     </li>
                   );

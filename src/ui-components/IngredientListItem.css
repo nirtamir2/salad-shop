@@ -1,19 +1,29 @@
 .IngredientListItem {
-  list-style: none;
-}
-
-.IngredientListItem__button {
   width: 100%;
   padding: var(--gutter);
 
   display: flex;
   align-items: center;
 
-  text-align: start;
+  list-style: none;
   border: none;
-  cursor: pointer;
   background-color: var(--primary-color);
 
+  text-align: start;
+  color: var(--secondary-text-color);
+}
+
+.IngredientListItem__button {
+  margin-left: var(--gutter);
+
+  width: calc(var(--text-font-size) * 1.5);
+  height: calc(var(--text-font-size) * 1.5);
+
+  border: none;
+  border-radius: 50%;
+  background-color: var(--secondary-color);
+
+  font-size: var(--gutter);
   color: var(--secondary-text-color);
 
   transition: background-color var(--animation-speed-fast);
