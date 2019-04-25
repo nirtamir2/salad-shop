@@ -5,10 +5,8 @@
   grid-gap: var(--gutter);
   grid-template-columns: 1fr 1fr 2fr 1fr;
   grid-template-areas:
-    ". . . . "
     ". list overview ."
-    ". button button ."
-    ". . . .";
+    ". button button .";
 }
 
 .IngredientsPage__list {
@@ -46,14 +44,17 @@
   .IngredientsPage {
     grid-template-columns: 1fr;
     grid-template-areas:
-      "."
       "list"
       "overview"
-      "button"
-      ".";
+      "button";
   }
 
   .IngredientsPage__overview__card {
     min-height: unset;
+  }
+
+  .IngredientsPage__list {
+    height: unset;
+    max-height: unset;
   }
 }
