@@ -1,14 +1,22 @@
 :root {
   /* Colors */
   --primary-color: #373831;
+  --primary-color-hover: #079c32;
+  --primary-color-25p: #373831aa;
   --secondary-text-color: #fefefe;
 
   /* Dimensions */
   --header-height: 50px;
   --gutter: var(--text-font-size);
+  --border-radius: 5px;
 
   /* Fonts */
   --text-font-size: 16px;
+  --big-text-font-size: calc(1.5 * var(--text-font-size));
   --h1-font-size: calc(2 * var(--text-font-size));
+
   --bold-font-weight: 400;
+
+  /* Animation */
+  --animation-speed-fast: 400ms;
 }

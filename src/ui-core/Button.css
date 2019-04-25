@@ -1,0 +1,25 @@
+@import "./../index.css";
+
+.Button {
+  padding: calc(var(--gutter));
+
+  background: var(--primary-color);
+  border-radius: var(--border-radius);
+
+  font-size: var(--big-text-font-size);
+  color: var(--secondary-text-color);
+
+  transition: background-color var(--animation-speed-fast);
+}
+
+.Button:hover {
+  background-color: var(--primary-color-hover);
+}
+
+.Button:active {
+  transform: translateY(1px);
+}
+
+.Button--link {
+  text-decoration: none;
+}

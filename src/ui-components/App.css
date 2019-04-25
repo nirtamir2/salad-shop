@@ -6,4 +6,11 @@
 
 .App__body {
   flex: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-image: url("assets/salad-background.png");
+  background-size: cover;
 }
