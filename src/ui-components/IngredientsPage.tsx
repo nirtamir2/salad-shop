@@ -1,8 +1,8 @@
 import React from "react";
-import Ingredient from "./Ingredient";
 import { IngredientsContext } from "./IngredientsContext";
-import "./IngredientsPage.css";
 import Card from "../ui-core/Card";
+import IngredientListItem from "./IngredientListItem";
+import "./IngredientsPage.css";
 
 function IngredientsPage() {
   const ingredientsContext = React.useContext(IngredientsContext);
@@ -26,14 +26,12 @@ function IngredientsPage() {
           {ingredients.map(i => {
             // Assuming that the title of the ingredient stays unique.
             return (
-              <li key={i.title} className="IngredientsPage__list-item">
-                <button
-                  onClick={() => handleIngredientClick(i)}
-                  className="IngredientsPage__list-item-button"
-                >
-                  <Ingredient title={i.title} priceInUsd={i.priceInUsd} />
-                </button>
-              </li>
+              <IngredientListItem
+                key={i.title}
+                priceInUsd={i.priceInUsd}
+                title={i.title}
+                onClick={() => handleIngredientClick(i)}
+              />
             );
           })}
         </ul>

@@ -14,7 +14,7 @@
 }
 
 .Button:hover {
-  background-color: var(--primary-color-hover);
+  background-color: var(--secondary-color);
 }
 
 .Button:active {

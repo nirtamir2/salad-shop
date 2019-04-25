@@ -1,0 +1,39 @@
+.IngredientListItem {
+  list-style: none;
+}
+
+.IngredientListItem__button {
+  width: 100%;
+  padding: var(--gutter);
+
+  display: flex;
+  align-items: center;
+
+  text-align: start;
+  border: none;
+  cursor: pointer;
+  background-color: var(--primary-color);
+
+  color: var(--secondary-text-color);
+
+  transition: background-color var(--animation-speed-fast);
+}
+
+.IngredientListItem__button:hover {
+  background-color: var(--primary-color-hover);
+}
+
+.IngredientListItem__button:active {
+  background-color: var(--primary-color);
+}
+
+.IngredientListItem__title {
+  margin-right: var(--gutter);
+  flex: 1;
+  text-transform: capitalize;
+  font-size: var(--big-text-font-size);
+}
+
+.IngredientListItem__price {
+  font-size: var(--text-font-size);
+}
