@@ -1,0 +1,9 @@
+.App {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.App__body {
+  flex: 1;
+}

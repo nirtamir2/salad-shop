@@ -1,0 +1,14 @@
+:root {
+  /* Colors */
+  --primary-color: #373831;
+  --secondary-text-color: #fefefe;
+
+  /* Dimensions */
+  --header-height: 50px;
+  --gutter: var(--text-font-size);
+
+  /* Fonts */
+  --text-font-size: 16px;
+  --h1-font-size: calc(2 * var(--text-font-size));
+  --bold-font-weight: 400;
+}

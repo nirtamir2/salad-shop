@@ -1,0 +1,19 @@
+@import "./../index.css";
+
+.Header {
+  height: var(--header-height);
+  width: 100%;
+
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--primary-color);
+}
+
+.Header__text {
+  color: var(--secondary-text-color);
+  font-style: var(--h1-font-size);
+  font-weight: var(--bold-font-weight);
+}
