@@ -6,16 +6,33 @@ import "./IngredientsPage.css";
 
 function IngredientsPage() {
   const ingredientsContext = React.useContext(IngredientsContext);
-  const { ingredients, fetchIngredients } = ingredientsContext;
+  const {
+    ingredients,
+    fetchIngredients,
+    order,
+    addUserOrderItem
+  } = ingredientsContext;
 
   React.useEffect(() => {
     fetchIngredients();
   }, [fetchIngredients]);
 
-  function handleIngredientClick(__ingredient: {
+  const formattedOrder = React.useMemo(() => {
+    const arr = [];
+    for (const [id, count] of order) {
+      const ingredient = ingredients.find(i => i.title === id);
+      if (ingredient == null) continue;
+      arr.push({ ...ingredient, count });
+    }
+    return arr;
+  }, [ingredients, order]);
+
+  function handleIngredientClick(ingredient: {
     title: string;
     priceInUsd: number;
-  }) {}
+  }) {
+    addUserOrderItem(ingredient.title);
+  }
 
   return (
     <div className="IngredientsPage">
@@ -38,10 +55,17 @@ function IngredientsPage() {
       )}
       <Card>
         <h2>Order summary</h2>
-        <ul>
-          <li>Tomato * 2 = 16$</li>
-          <li>Pasta * 2 = 1$</li>
-        </ul>
+        {formattedOrder.length === 0 ? null : (
+          <ul>
+            {formattedOrder.map(o => {
+              return (
+                <li key={o.title}>
+                  {o.title} x {o.count} = {o.count * o.priceInUsd}$
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </Card>
     </div>
   );

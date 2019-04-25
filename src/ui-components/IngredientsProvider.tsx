@@ -15,6 +15,10 @@ function IngredientsProvider(props: IProps) {
     ReadonlyArray<IIngredient>
   >([]);
 
+  const [order, setOrder] = React.useState<ReadonlyMap<string, number>>(
+    new Map<string, number>()
+  );
+
   const clearIngredients = React.useCallback(() => {
     setIngredients([]);
   }, []);
@@ -65,13 +69,56 @@ function IngredientsProvider(props: IProps) {
     })();
   }, [isMounted]);
 
+  const addUserOrderItem = React.useCallback((id: string) => {
+    setOrder(o => {
+      const count = o.get(id) || 0;
+      const order = new Map(o);
+      order.set(id, count + 1);
+      return order;
+    });
+  }, []);
+
+  const deleteOrderItem = React.useCallback((id: string) => {
+    setOrder(o => {
+      const count = o.get(id) || 0;
+      if (count === 0) {
+        return o;
+      }
+
+      const order = new Map(o);
+      order.set(id, count - 1);
+      return order;
+    });
+  }, []);
+
+  const clearOrder = React.useCallback(() => {
+    setOrder(o => {
+      if (o.size === 0) {
+        return o;
+      }
+      return new Map();
+    });
+  }, []);
+
   const contextValue = React.useMemo(() => {
     return {
       ingredients,
+      order,
       fetchIngredients,
-      clearIngredients
+      clearIngredients,
+      addUserOrderItem,
+      deleteOrderItem,
+      clearOrder
     };
-  }, [ingredients, fetchIngredients, clearIngredients]);
+  }, [
+    ingredients,
+    order,
+    fetchIngredients,
+    clearIngredients,
+    addUserOrderItem,
+    deleteOrderItem,
+    clearOrder
+  ]);
 
   return (
     <IngredientsContext.Provider value={contextValue}>
