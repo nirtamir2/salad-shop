@@ -3,6 +3,7 @@ import { IngredientsContext } from "./IngredientsContext";
 import Card from "../ui-core/Card";
 import IngredientListItem from "./IngredientListItem";
 import "./IngredientsPage.css";
+import Button from "../ui-core/Button";
 
 function IngredientsPage() {
   const ingredientsContext = React.useContext(IngredientsContext);
@@ -68,6 +69,9 @@ function IngredientsPage() {
             )}
           </div>
         </Card>
+      </div>
+      <div className="IngredientsPage__button">
+        <Button to="/checkout">Proceed to Checkout</Button>
       </div>
     </div>
   );

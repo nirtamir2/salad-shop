@@ -7,6 +7,7 @@
   grid-template-areas:
     ". . . . "
     ". list overview ."
+    ". button button ."
     ". . . .";
 }
 
@@ -34,6 +35,13 @@
   flex-direction: column;
 }
 
+.IngredientsPage__button {
+  grid-area: button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media screen and (max-width: 500px) {
   .IngredientsPage {
     grid-template-columns: 1fr;
@@ -41,6 +49,7 @@
       "."
       "list"
       "overview"
+      "button"
       ".";
   }
 
