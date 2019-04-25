@@ -54,38 +54,43 @@ function IngredientsPage() {
           })}
         </ul>
       )}
-      <Card>
-        <h2>Order summary</h2>
-        {formattedOrder.length === 0 ? null : (
-          <ul>
-            {formattedOrder.map(o => {
-              return (
-                <li key={o.title}>
-                  <div>
-                    <button
-                      onClick={() => {
-                        addUserOrderItem(o.title);
-                      }}
-                    >
-                      +
-                    </button>
-                    <button
-                      onClick={() => {
-                        deleteOrderItem(o.title);
-                      }}
-                    >
-                      -
-                    </button>
-                    <div>
-                      {o.title} x {o.count} = {o.count * o.priceInUsd}$
-                    </div>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </Card>
+      <div className="IngredientsPage__overview">
+        <Card>
+          <div className="IngredientsPage__overview__card">
+            <h2>Order summary</h2>
+            {formattedOrder.length === 0 ? null : (
+              <ul>
+                {formattedOrder.map(o => {
+                  return (
+                    <li key={o.title}>
+                      <div>
+                        <button
+                          onClick={() => {
+                            addUserOrderItem(o.title);
+                          }}
+                        >
+                          +
+                        </button>
+                        <button
+                          onClick={() => {
+                            deleteOrderItem(o.title);
+                          }}
+                        >
+                          -
+                        </button>
+                        <div>
+                          {o.title} x {o.count} ={" "}
+                          {(o.count * o.priceInUsd).toFixed(2)}$
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </div>
+        </Card>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,20 @@
 @import "./../index.css";
 
 .HomePage {
-  margin: var(--gutter);
+  height: 100%;
+  padding: var(--gutter);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.HomePage__content {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  grid-gap: var(--gutter);
 }
 
 .HomePage-title {

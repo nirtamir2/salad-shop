@@ -1,16 +1,11 @@
 .App {
   height: 100vh;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: var(--header-height) 1fr;
+  overflow: auto;
 }
 
 .App__body {
-  flex: 1;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   background-image: url("assets/salad-background.png");
   background-size: cover;
 }

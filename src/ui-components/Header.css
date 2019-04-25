@@ -13,7 +13,6 @@
 }
 
 .Header__placeholder {
-  height: var(--header-height);
 }
 
 .Header__text {
