@@ -1,18 +1,5 @@
 @import "./../index.css";
 
-.HomePage {
-  margin: var(--gutter);
-  padding: calc(var(--gutter) * 2);
-
-  display: grid;
-  grid-gap: var(--gutter);
-  justify-items: center;
-
-  background-color: var(--primary-color-25p);
-  border-radius: var(--border-radius);
-  color: var(--secondary-text-color);
-}
-
 .HomePage-title {
   font-size: var(--h1-font-size);
 }

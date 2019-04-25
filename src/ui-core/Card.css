@@ -1,0 +1,15 @@
+@import "./../index.css";
+
+.Card {
+  margin: var(--gutter);
+  padding: calc(var(--gutter) * 2);
+
+  display: grid;
+  grid-gap: var(--gutter);
+  justify-items: center;
+
+  background-color: var(--card-bg-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  color: var(--secondary-text-color);
+}

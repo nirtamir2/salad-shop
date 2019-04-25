@@ -2,8 +2,10 @@
   /* Colors */
   --primary-color: #373831;
   --primary-color-hover: #079c32;
-  --primary-color-25p: #373831aa;
   --secondary-text-color: #fefefe;
+
+  --primary-color-75p: rgba(55, 56, 49, 0.75);
+  --card-bg-color: var(--primary-color-75p);
 
   /* Dimensions */
   --header-height: 50px;
@@ -16,6 +18,10 @@
   --h1-font-size: calc(2 * var(--text-font-size));
 
   --bold-font-weight: 400;
+
+  /* Shadows */
+  --box-shadow-color: rgba(0, 0, 0, 0.3);
+  --box-shadow: 1px 1px 5px 1px var(--box-shadow-color);
 
   /* Animation */
   --animation-speed-fast: 400ms;

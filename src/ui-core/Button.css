@@ -8,6 +8,7 @@
 
   font-size: var(--big-text-font-size);
   color: var(--secondary-text-color);
+  box-shadow: var(--box-shadow);
 
   transition: background-color var(--animation-speed-fast);
 }
