@@ -10,24 +10,13 @@ function IngredientsPage() {
   const {
     ingredients,
     fetchIngredients,
-    order,
-    addUserOrderItem,
+    addOrderItem,
     deleteOrderItem
   } = ingredientsContext;
 
   React.useEffect(() => {
     fetchIngredients();
   }, [fetchIngredients]);
-
-  const formattedOrder = React.useMemo(() => {
-    const arr = [];
-    for (const [id, count] of order) {
-      const ingredient = ingredients.find(i => i.title === id);
-      if (ingredient == null) continue;
-      arr.push({ ...ingredient, count });
-    }
-    return arr;
-  }, [ingredients, order]);
 
   return (
     <div className="IngredientsPage">
@@ -36,14 +25,13 @@ function IngredientsPage() {
       ) : (
         <ul className="IngredientsPage__list">
           {ingredients.map(i => {
-            // Assuming that the title of the ingredient stays unique.
             return (
               <IngredientListItem
-                key={i.title}
+                key={i.id}
                 priceInUsd={i.priceInUsd}
                 title={i.title}
-                onAdd={() => addUserOrderItem(i.title)}
-                onDelete={() => deleteOrderItem(i.title)}
+                onAdd={() => addOrderItem(i.id)}
+                onDelete={() => deleteOrderItem(i.id)}
               />
             );
           })}
@@ -53,18 +41,20 @@ function IngredientsPage() {
         <Card>
           <div className="IngredientsPage__overview__card">
             <h2>Order summary</h2>
-            {formattedOrder.length === 0 ? null : (
+            {ingredients.length === 0 ? null : (
               <ul>
-                {formattedOrder.map(o => {
-                  return (
-                    <li key={o.title}>
-                      <div>
-                        {o.title} x {o.count} ={" "}
-                        {(o.count * o.priceInUsd).toFixed(2)}$
-                      </div>
-                    </li>
-                  );
-                })}
+                {ingredients
+                  .filter(i => i.count > 0)
+                  .map(o => {
+                    return (
+                      <li key={o.id}>
+                        <div>
+                          {o.title} x {o.count} ={" "}
+                          {(o.count * o.priceInUsd).toFixed(2)}$
+                        </div>
+                      </li>
+                    );
+                  })}
               </ul>
             )}
           </div>

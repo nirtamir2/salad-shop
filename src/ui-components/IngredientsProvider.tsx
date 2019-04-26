@@ -7,22 +7,85 @@ interface IProps {
   children: React.ReactNode;
 }
 
+interface IState {
+  ingredients: ReadonlyArray<IIngredient>;
+}
+
+type ActionT =
+  | ISetIngredientsAction
+  | IClearIngredientsAction
+  | IAddOrderItemAction
+  | IDeleteOrderItemAction
+  | IClearOrderAction;
+
+interface ISetIngredientsAction {
+  type: "SET_INGREDIENTS";
+  payload: { ingredients: ReadonlyArray<IIngredient> };
+}
+interface IClearIngredientsAction {
+  type: "CLEAR_INGREDIENTS";
+}
+interface IAddOrderItemAction {
+  type: "ADD_ORDER_ITEM";
+  payload: {
+    id: string;
+  };
+}
+interface IDeleteOrderItemAction {
+  type: "DELETE_ORDER_ITEM";
+  payload: {
+    id: string;
+  };
+}
+interface IClearOrderAction {
+  type: "CLEAR_ORDER";
+}
+
+function reducer(state: IState, action: ActionT): IState {
+  switch (action.type) {
+    case "SET_INGREDIENTS":
+      return { ingredients: action.payload.ingredients };
+    case "CLEAR_INGREDIENTS":
+      if (state.ingredients.length === 0) return state;
+      return {
+        ingredients: []
+      };
+    case "ADD_ORDER_ITEM":
+      return {
+        ingredients: state.ingredients.map(i => {
+          return i.id === action.payload.id ? { ...i, count: i.count + 1 } : i;
+        })
+      };
+    case "DELETE_ORDER_ITEM":
+      if (
+        state.ingredients.some(i => i.id === action.payload.id && i.count === 0)
+      )
+        return state;
+      return {
+        ingredients: state.ingredients.map(i => {
+          return i.id === action.payload.id ? { ...i, count: i.count - 1 } : i;
+        })
+      };
+    case "CLEAR_ORDER":
+      if (state.ingredients.some(i => i.count !== 0)) return state;
+      return {
+        ingredients: state.ingredients.map(i => {
+          return { ...i, count: 0 };
+        })
+      };
+  }
+}
+
+const INITIAL_STATE: IState = { ingredients: [] };
+
 function IngredientsProvider(props: IProps) {
   const { children } = props;
-
-  const isMounted = useIsMounted();
-
-  const [ingredients, setIngredients] = React.useState<
-    ReadonlyArray<IIngredient>
-  >([]);
-
-  const [order, setOrder] = React.useState<ReadonlyMap<string, number>>(
-    new Map<string, number>()
+  const [state, dispatch] = React.useReducer<React.Reducer<IState, ActionT>>(
+    reducer,
+    INITIAL_STATE
   );
 
-  const clearIngredients = React.useCallback(() => {
-    setIngredients([]);
-  }, []);
+  const isMounted = useIsMounted();
 
   const fetchIngredients = React.useCallback(() => {
     (async function() {
@@ -47,10 +110,16 @@ function IngredientsProvider(props: IProps) {
           const ingredients = (ingredientsData.items as ReadonlyArray<{
             name: string;
             price: number;
-          }>).map(i => {
-            return { title: i.name, priceInUsd: i.price };
+          }>).map((ingredient, index) => {
+            return {
+              id: index.toString(),
+              title: ingredient.name,
+              priceInUsd: ingredient.price,
+              count: 0
+            };
           });
-          setIngredients(ingredients);
+
+          dispatch({ type: "SET_INGREDIENTS", payload: { ingredients } });
         } catch (e) {
           if (process.env.NODE_ENV !== "production") {
             console.error(
@@ -72,57 +141,33 @@ function IngredientsProvider(props: IProps) {
     })();
   }, [isMounted]);
 
-  const addUserOrderItem = React.useCallback((id: string) => {
-    setOrder(o => {
-      const count = o.get(id) || 0;
-      const order = new Map(o);
-      order.set(id, count + 1);
-      return order;
-    });
+  const clearIngredients = React.useCallback(() => {
+    dispatch({ type: "CLEAR_INGREDIENTS" });
   }, []);
-
+  const addOrderItem = React.useCallback((id: string) => {
+    dispatch({ type: "ADD_ORDER_ITEM", payload: { id } });
+  }, []);
   const deleteOrderItem = React.useCallback((id: string) => {
-    setOrder(o => {
-      if (!o.has(id)) {
-        return o;
-      }
-
-      const count = o.get(id) || 0;
-      const order = new Map(o);
-      if (count === 1) {
-        order.delete(id);
-      } else {
-        order.set(id, count - 1);
-      }
-      return order;
-    });
+    dispatch({ type: "DELETE_ORDER_ITEM", payload: { id } });
   }, []);
-
   const clearOrder = React.useCallback(() => {
-    setOrder(o => {
-      if (o.size === 0) {
-        return o;
-      }
-      return new Map();
-    });
+    dispatch({ type: "CLEAR_ORDER" });
   }, []);
 
   const contextValue = React.useMemo(() => {
     return {
-      ingredients,
-      order,
+      ingredients: state.ingredients,
       fetchIngredients,
       clearIngredients,
-      addUserOrderItem,
+      addOrderItem,
       deleteOrderItem,
       clearOrder
     };
   }, [
-    ingredients,
-    order,
+    state,
     fetchIngredients,
     clearIngredients,
-    addUserOrderItem,
+    addOrderItem,
     deleteOrderItem,
     clearOrder
   ]);

@@ -1,26 +1,26 @@
 import React from "react";
 
 export interface IIngredient {
+  id: string;
   title: string;
   priceInUsd: number;
+  count: number;
 }
 
 export interface IIngredientContextValue {
   ingredients: ReadonlyArray<IIngredient>;
-  order: ReadonlyMap<string, number>;
-  clearIngredients: () => void;
   fetchIngredients: () => void;
-  clearOrder: () => void;
-  addUserOrderItem: (id: string) => void;
+  clearIngredients: () => void;
+  addOrderItem: (id: string) => void;
   deleteOrderItem: (id: string) => void;
+  clearOrder: () => void;
 }
 
 export const IngredientsContext = React.createContext<IIngredientContextValue>({
   ingredients: [],
-  order: new Map(),
-  clearIngredients: function noop() {},
   fetchIngredients: function noop() {},
-  addUserOrderItem: function noop() {},
+  clearIngredients: function noop() {},
+  addOrderItem: function noop() {},
   deleteOrderItem: function noop() {},
   clearOrder: function noop() {}
 });
