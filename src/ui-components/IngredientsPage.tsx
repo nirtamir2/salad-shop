@@ -18,6 +18,10 @@ function IngredientsPage() {
     fetchIngredients();
   }, [fetchIngredients]);
 
+  const order = React.useMemo(() => ingredients.filter(i => i.count > 0), [
+    ingredients
+  ]);
+
   return (
     <div className="IngredientsPage">
       {ingredients.length === 0 ? (
@@ -41,27 +45,27 @@ function IngredientsPage() {
         <Card>
           <div className="IngredientsPage__overview__card">
             <h2>Order summary</h2>
-            {ingredients.length === 0 ? null : (
+            {order.length === 0 ? null : (
               <ul>
-                {ingredients
-                  .filter(i => i.count > 0)
-                  .map(o => {
-                    return (
-                      <li key={o.id}>
-                        <div>
-                          {o.title} x {o.count} ={" "}
-                          {(o.count * o.priceInUsd).toFixed(2)}$
-                        </div>
-                      </li>
-                    );
-                  })}
+                {order.map(o => {
+                  return (
+                    <li key={o.id}>
+                      <div>
+                        {o.title} x {o.count} ={" "}
+                        {(o.count * o.priceInUsd).toFixed(2)}$
+                      </div>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </div>
         </Card>
       </div>
       <div className="IngredientsPage__button">
-        <Button to="/checkout">Proceed to Checkout</Button>
+        <Button to="/checkout" disabled={order.length === 0}>
+          Proceed to Checkout
+        </Button>
       </div>
     </div>
   );

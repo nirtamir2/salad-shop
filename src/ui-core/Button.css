@@ -24,3 +24,8 @@
 .Button--link {
   text-decoration: none;
 }
+
+.Button--disabled{
+  cursor: not-allowed;
+  pointer-events: none;
+}
