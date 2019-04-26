@@ -1,9 +1,9 @@
 import React from "react";
-import { IngredientsContext } from "./IngredientsContext";
+import Button from "../ui-core/Button";
 import Card from "../ui-core/Card";
 import IngredientListItem from "./IngredientListItem";
+import { IngredientsContext } from "./IngredientsContext";
 import "./IngredientsPage.css";
-import Button from "../ui-core/Button";
 
 function IngredientsPage() {
   const ingredientsContext = React.useContext(IngredientsContext);

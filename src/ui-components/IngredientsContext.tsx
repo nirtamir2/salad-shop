@@ -10,9 +10,9 @@ export interface IIngredientContextValue {
   order: ReadonlyMap<string, number>;
   clearIngredients: () => void;
   fetchIngredients: () => void;
+  clearOrder: () => void;
   addUserOrderItem: (id: string) => void;
   deleteOrderItem: (id: string) => void;
-  clearOrder: () => void;
 }
 
 export const IngredientsContext = React.createContext<IIngredientContextValue>({
