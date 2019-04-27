@@ -3,13 +3,14 @@ import { IngredientsContext } from "./IngredientsContext";
 import Card from "../ui-core/Card";
 import Button from "../ui-core/Button";
 import TextField from "../ui-core/TextField";
+import Modal from "../ui-core/Modal";
 import OrderSummary from "./OrderSummary";
 import "./CheckoutPage.css";
 
 function CheckoutPage() {
   const ingredientsContext = React.useContext(IngredientsContext);
 
-  const { order } = ingredientsContext;
+  const { order, clearOrder } = ingredientsContext;
 
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -68,19 +69,31 @@ function CheckoutPage() {
           </Button>
         </div>
       </form>
-      {shouldOpenModal ? (
-        <div className="modal">
-          <Card>
-            <div
-              onClick={() => {
-                setShouldOpenModal(false);
-              }}
-            >
-              hi all
-            </div>
-          </Card>
-        </div>
-      ) : null}
+
+      <Modal isVisible={shouldOpenModal}>
+        <Card>
+          <h2>Summary order</h2>
+          <OrderSummary order={order} />
+          <div>
+            <p>name: {name}</p>
+            <p>email: {email}</p>
+            {note == null ? null : <p>note: {note}</p>}
+          </div>
+          <div>
+            <p>Thank you!</p>
+            <p>Delivery is on its way</p>
+          </div>
+          <Button
+            to="/"
+            onClick={() => {
+              setShouldOpenModal(false);
+              clearOrder();
+            }}
+          >
+            Close
+          </Button>
+        </Card>
+      </Modal>
     </div>
   );
 }

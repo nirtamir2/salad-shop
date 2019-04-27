@@ -1,2 +1,11 @@
 .OrderSummary {
 }
+
+.OrderSummary__list {
+  padding: 0;
+  margin: 0;
+}
+
+.OrderSummary__totalPrice{
+    margin-top: var(--gutter);
+}

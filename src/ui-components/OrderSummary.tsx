@@ -14,7 +14,7 @@ function OrderSummary(props: IProps) {
     <div className="OrderSummary">
       {items.length === 0 ? null : (
         <>
-          <ul>
+          <ul className="OrderSummary__list">
             {items.map(o => {
               const { ingredient, count } = o;
               return (
@@ -27,7 +27,7 @@ function OrderSummary(props: IProps) {
               );
             })}
           </ul>
-          <div>
+          <div className="OrderSummary__totalPrice">
             Total price: {CURRENCY_SYMBOL}
             {order.totalPriceInUsd.toFixed(2)}
           </div>

@@ -17,6 +17,7 @@ function Button(props: IProps) {
     return (
       <Link
         to={to}
+        onClick={onClick}
         className={cx("Button Button--link", { "Button--disabled": disabled })}
       >
         {children}
