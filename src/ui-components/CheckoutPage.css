@@ -64,7 +64,7 @@
   .CheckoutPage {
     grid-template-columns: 1fr;
     grid-template-areas:
-      "list"
+      "form"
       "overview"
       "button";
   }

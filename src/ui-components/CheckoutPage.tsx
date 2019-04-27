@@ -3,13 +3,13 @@ import { IngredientsContext } from "./IngredientsContext";
 import Card from "../ui-core/Card";
 import Button from "../ui-core/Button";
 import TextField from "../ui-core/TextField";
+import OrderSummary from "./OrderSummary";
 import "./CheckoutPage.css";
 
 function CheckoutPage() {
   const ingredientsContext = React.useContext(IngredientsContext);
 
   const { order } = ingredientsContext;
-  const orderItems = order.items;
 
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -58,28 +58,12 @@ function CheckoutPage() {
 
         <div className="CheckoutPage__overview">
           <Card>
-            <div className="CheckoutPage__overview__card">
-              <h2>Order summary</h2>
-              {orderItems.length === 0 ? null : (
-                <ul>
-                  {orderItems.map(o => {
-                    const { ingredient, count } = o;
-                    return (
-                      <li key={ingredient.id}>
-                        <div>
-                          {ingredient.title} x {count} ={" "}
-                          {(count * ingredient.priceInUsd).toFixed(2)}$
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-            </div>
+            <h2>Order summary</h2>
+            <OrderSummary order={order} />
           </Card>
         </div>
         <div className="CheckoutPage__button">
-          <Button type="submit" disabled={orderItems.length === 0}>
+          <Button type="submit" disabled={order.items.length === 0}>
             Buy Now
           </Button>
         </div>

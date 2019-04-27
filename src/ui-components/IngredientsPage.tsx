@@ -4,6 +4,7 @@ import Card from "../ui-core/Card";
 import IngredientListItem from "./IngredientListItem";
 import { IngredientsContext } from "./IngredientsContext";
 import "./IngredientsPage.css";
+import OrderSummaryDetails from "./OrderSummary";
 
 function IngredientsPage() {
   const ingredientsContext = React.useContext(IngredientsContext);
@@ -18,8 +19,6 @@ function IngredientsPage() {
   React.useEffect(() => {
     fetchIngredients();
   }, [fetchIngredients]);
-
-  const orderItems = order.items;
 
   return (
     <div className="IngredientsPage">
@@ -42,28 +41,12 @@ function IngredientsPage() {
       )}
       <div className="IngredientsPage__overview">
         <Card>
-          <div className="IngredientsPage__overview__card">
-            <h2>Order summary</h2>
-            {orderItems.length === 0 ? null : (
-              <ul>
-                {orderItems.map(o => {
-                  const { ingredient, count } = o;
-                  return (
-                    <li key={ingredient.id}>
-                      <div>
-                        {ingredient.title} x {count} ={" "}
-                        {(count * ingredient.priceInUsd).toFixed(2)}$
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-          </div>
+          <h2>Order summary</h2>
+          <OrderSummaryDetails order={order} />
         </Card>
       </div>
       <div className="IngredientsPage__button">
-        <Button to="/checkout" disabled={orderItems.length === 0}>
+        <Button to="/checkout" disabled={order.items.length === 0}>
           Proceed to Checkout
         </Button>
       </div>

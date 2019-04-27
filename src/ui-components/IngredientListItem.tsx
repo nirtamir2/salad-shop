@@ -1,5 +1,6 @@
 import React from "react";
 import "./IngredientListItem.css";
+import { CURRENCY_SYMBOL } from "../constants/constants";
 
 interface IProps {
   title: string;
@@ -8,15 +9,14 @@ interface IProps {
   onDelete: () => void;
 }
 
-const CURRENCY_SYMBOL = "$";
 function IngredientListItem(props: IProps) {
   const { title, priceInUsd, onAdd, onDelete } = props;
   return (
     <li key={title} className="IngredientListItem">
       <div className="IngredientListItem__title">{title}</div>
       <div className="IngredientListItem__price">
-        {priceInUsd}
         {CURRENCY_SYMBOL}
+        {priceInUsd.toFixed(2)}
       </div>
       <button onClick={onAdd} className="IngredientListItem__button">
         +
