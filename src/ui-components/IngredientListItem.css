@@ -14,15 +14,17 @@
 }
 
 .IngredientListItem__button {
-  margin-left: var(--gutter);
-
   width: calc(var(--text-font-size) * 1.5);
   height: calc(var(--text-font-size) * 1.5);
+
+  padding: 0;
+  margin-left: var(--gutter);
 
   border: none;
   border-radius: 50%;
   background-color: var(--secondary-color);
 
+  line-height: 1;
   font-size: var(--gutter);
   color: var(--secondary-text-color);
 
