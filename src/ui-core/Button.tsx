@@ -6,11 +6,13 @@ import "./Button.css";
 interface IProps {
   children: React.ReactNode;
   disabled?: boolean;
+  onClick?: () => void;
+  type?: "button" | "submit" | "reset";
   to?: string;
 }
 
 function Button(props: IProps) {
-  const { children, to, disabled = false } = props;
+  const { children, to, disabled = false, type = "button", onClick } = props;
   if (to != null) {
     return (
       <Link
@@ -23,7 +25,9 @@ function Button(props: IProps) {
   }
   return (
     <button
+      onClick={onClick}
       disabled={disabled}
+      type={type}
       className={cx("Button", { "Button--disabled": disabled })}
     >
       {children}

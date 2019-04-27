@@ -3,6 +3,7 @@
 .Button {
   padding: calc(var(--gutter));
 
+  border: none;
   background: var(--primary-color);
   border-radius: var(--border-radius);
 
@@ -25,7 +26,7 @@
   text-decoration: none;
 }
 
-.Button--disabled{
+.Button--disabled {
   cursor: not-allowed;
   pointer-events: none;
 }
