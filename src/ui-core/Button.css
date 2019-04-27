@@ -4,7 +4,7 @@
   padding: calc(var(--gutter));
 
   border: none;
-  background: var(--primary-color);
+  background: var(--secondary-color);
   border-radius: var(--border-radius);
 
   font-size: var(--big-text-font-size);
@@ -15,7 +15,7 @@
 }
 
 .Button:hover {
-  background-color: var(--secondary-color);
+  background-color: var(--secondary-color-hover);
 }
 
 .Button:active {
@@ -29,4 +29,6 @@
 .Button--disabled {
   cursor: not-allowed;
   pointer-events: none;
+
+  background-color: var(--third-color);
 }

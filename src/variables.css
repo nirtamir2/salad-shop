@@ -2,8 +2,9 @@
   /* Colors */
   --primary-color: #373831;
   --secondary-color: #079c32;
+  --third-color: #4b4c44;
 
-  --primary-color-hover: #4b4c44;
+  --secondary-color-hover: #076d25;
   --secondary-text-color: #fefefe;
 
   --primary-color-75p: rgba(55, 56, 49, 0.75);
