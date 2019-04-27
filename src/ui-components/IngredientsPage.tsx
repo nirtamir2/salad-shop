@@ -9,6 +9,7 @@ function IngredientsPage() {
   const ingredientsContext = React.useContext(IngredientsContext);
   const {
     ingredients,
+    order,
     fetchIngredients,
     addOrderItem,
     deleteOrderItem
@@ -18,9 +19,7 @@ function IngredientsPage() {
     fetchIngredients();
   }, [fetchIngredients]);
 
-  const order = React.useMemo(() => ingredients.filter(i => i.count > 0), [
-    ingredients
-  ]);
+  const orderItems = order.items;
 
   return (
     <div className="IngredientsPage">
@@ -45,14 +44,15 @@ function IngredientsPage() {
         <Card>
           <div className="IngredientsPage__overview__card">
             <h2>Order summary</h2>
-            {order.length === 0 ? null : (
+            {orderItems.length === 0 ? null : (
               <ul>
-                {order.map(o => {
+                {orderItems.map(o => {
+                  const { ingredient, count } = o;
                   return (
-                    <li key={o.id}>
+                    <li key={ingredient.id}>
                       <div>
-                        {o.title} x {o.count} ={" "}
-                        {(o.count * o.priceInUsd).toFixed(2)}$
+                        {ingredient.title} x {count} ={" "}
+                        {(count * ingredient.priceInUsd).toFixed(2)}$
                       </div>
                     </li>
                   );
@@ -63,7 +63,7 @@ function IngredientsPage() {
         </Card>
       </div>
       <div className="IngredientsPage__button">
-        <Button to="/checkout" disabled={order.length === 0}>
+        <Button to="/checkout" disabled={orderItems.length === 0}>
           Proceed to Checkout
         </Button>
       </div>

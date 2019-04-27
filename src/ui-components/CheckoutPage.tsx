@@ -7,16 +7,15 @@ import "./CheckoutPage.css";
 
 function CheckoutPage() {
   const ingredientsContext = React.useContext(IngredientsContext);
-  const { ingredients } = ingredientsContext;
+
+  const { order } = ingredientsContext;
+  const orderItems = order.items;
 
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [note, setNote] = React.useState("");
-  const [shouldOpenModal, setShouldOpenModal] = React.useState(false);
 
-  const order = React.useMemo(() => ingredients.filter(i => i.count > 0), [
-    ingredients
-  ]);
+  const [shouldOpenModal, setShouldOpenModal] = React.useState(false);
   function handleBuy(e: React.FormEvent) {
     e.preventDefault();
     console.log("name", name);
@@ -61,14 +60,15 @@ function CheckoutPage() {
           <Card>
             <div className="CheckoutPage__overview__card">
               <h2>Order summary</h2>
-              {order.length === 0 ? null : (
+              {orderItems.length === 0 ? null : (
                 <ul>
-                  {order.map(o => {
+                  {orderItems.map(o => {
+                    const { ingredient, count } = o;
                     return (
-                      <li key={o.id}>
+                      <li key={ingredient.id}>
                         <div>
-                          {o.title} x {o.count} ={" "}
-                          {(o.count * o.priceInUsd).toFixed(2)}$
+                          {ingredient.title} x {count} ={" "}
+                          {(count * ingredient.priceInUsd).toFixed(2)}$
                         </div>
                       </li>
                     );
@@ -79,7 +79,7 @@ function CheckoutPage() {
           </Card>
         </div>
         <div className="CheckoutPage__button">
-          <Button type="submit" disabled={order.length === 0}>
+          <Button type="submit" disabled={orderItems.length === 0}>
             Buy Now
           </Button>
         </div>

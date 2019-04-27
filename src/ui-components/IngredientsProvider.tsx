@@ -7,8 +7,16 @@ interface IProps {
   children: React.ReactNode;
 }
 
+type StateOrderT = ReadonlyMap<
+  string /*ingredientId*/,
+  { id: string; count: number }
+>;
+
+type StateIngredientsT = ReadonlyMap<string, IIngredient>;
+
 interface IState {
-  ingredients: ReadonlyArray<IIngredient>;
+  ingredients: StateIngredientsT;
+  order: StateOrderT;
 }
 
 type ActionT =
@@ -41,42 +49,76 @@ interface IClearOrderAction {
   type: "CLEAR_ORDER";
 }
 
+function reduceAddOrderItem(state: IState, action: IAddOrderItemAction) {
+  const id = action.payload.id;
+  if (!state.ingredients.has(id)) return state;
+  const order = new Map(state.order);
+  const orderItem = order.get(id);
+  if (orderItem == null) {
+    order.set(id, { id, count: 1 });
+    return { ...state, order };
+  }
+  order.set(id, { ...orderItem, count: orderItem.count + 1 });
+  return {
+    ...state,
+    order
+  };
+}
+
+function reduceSetIngredients(state: IState, action: ISetIngredientsAction) {
+  const ingredients = new Map(state.ingredients);
+  action.payload.ingredients.forEach(i => ingredients.set(i.id, i));
+  return { ...state, ingredients };
+}
+
+function reduceDeleteOrderItem(action: IDeleteOrderItemAction, state: IState) {
+  const id = action.payload.id;
+
+  const order = new Map(state.order);
+  const orderItem = order.get(id);
+  if (orderItem == null) {
+    return state;
+  }
+  if (orderItem.count === 1) {
+    order.delete(id);
+    return { ...state, order };
+  }
+  order.set(id, { ...orderItem, count: orderItem.count - 1 });
+  return {
+    ...state,
+    order
+  };
+}
+
 function reducer(state: IState, action: ActionT): IState {
   switch (action.type) {
     case "SET_INGREDIENTS":
-      return { ingredients: action.payload.ingredients };
+      return reduceSetIngredients(state, action);
     case "CLEAR_INGREDIENTS":
-      if (state.ingredients.length === 0) return state;
+      if (state.ingredients.size === 0) return state;
       return {
-        ingredients: []
+        order: new Map(),
+        ingredients: new Map()
       };
     case "ADD_ORDER_ITEM":
-      return {
-        ingredients: state.ingredients.map(i => {
-          return i.id === action.payload.id ? { ...i, count: i.count + 1 } : i;
-        })
-      };
+      return reduceAddOrderItem(state, action);
     case "DELETE_ORDER_ITEM":
-      if (
-        state.ingredients.some(i => i.id === action.payload.id && i.count === 0)
-      )
-        return state;
-      return {
-        ingredients: state.ingredients.map(i => {
-          return i.id === action.payload.id ? { ...i, count: i.count - 1 } : i;
-        })
-      };
+      return reduceDeleteOrderItem(action, state);
     case "CLEAR_ORDER":
-      if (state.ingredients.some(i => i.count !== 0)) return state;
+      if (state.order.size === 0) return state;
       return {
-        ingredients: state.ingredients.map(i => {
-          return { ...i, count: 0 };
-        })
+        ...state,
+        order: new Map()
       };
+  }
+  if (process.env.NODE_ENV === "production") {
+    throw new Error(
+      `IngredientsProvider#reducer() - unsupported action ${action}`
+    );
   }
 }
 
-const INITIAL_STATE: IState = { ingredients: [] };
+const INITIAL_STATE: IState = { ingredients: new Map(), order: new Map() };
 
 function IngredientsProvider(props: IProps) {
   const { children } = props;
@@ -155,8 +197,26 @@ function IngredientsProvider(props: IProps) {
   }, []);
 
   const contextValue = React.useMemo(() => {
+    const orderItems = [];
+    for (const [id, order] of state.order) {
+      const ingredient = state.ingredients.get(id);
+      if (ingredient == null) continue;
+      orderItems.push({ ingredient, count: order.count });
+    }
+
+    const order = {
+      items: orderItems,
+      totalPriceInUsd: orderItems.reduce((accumulator, currentValue) => {
+        return (
+          accumulator + currentValue.ingredient.priceInUsd * currentValue.count
+        );
+      }, 0)
+    };
+
+    const ingredients = [...state.ingredients.values()];
     return {
-      ingredients: state.ingredients,
+      ingredients,
+      order,
       fetchIngredients,
       clearIngredients,
       addOrderItem,
