@@ -1,0 +1,21 @@
+@import "./../index.css";
+
+.TextField__label {
+  margin-right: var(--gutter);
+  color: var(--secondary-text-color);
+  top: 0;
+}
+
+.TextField__input {
+  border: 1px solid var(--secondary-text-color);
+  padding: calc(var(--gutter) / 2);
+  color: var(--secondary-text-color);
+  font-size: var(--text-font-size);
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+}
+
+.TextField__input--textarea {
+  resize: none;
+}
+
