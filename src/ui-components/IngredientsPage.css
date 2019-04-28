@@ -1,3 +1,5 @@
+@import "./../index.css";
+
 .IngredientsPage {
   margin: var(--gutter);
 
@@ -10,8 +12,8 @@
 }
 
 .IngredientsPage__list {
-  height: 500px;
-  max-height: 500px;
+  height: var(--section-max-height);
+  max-height: var(--section-max-height);
   padding: 0;
   margin: 0;
 
@@ -22,13 +24,13 @@
 }
 
 .IngredientsPage__overview {
-  max-height: 500px;
+  max-height: var(--section-max-height);
   overflow-y: auto;
   grid-area: overview;
 }
 
-.IngredientsPage__overview__card {
-  min-height: calc(500px - 4 * var(--gutter));
+.IngredientsPage__overview__content {
+  min-height: calc(var(--section-max-height) - 4 * var(--gutter));
   display: flex;
   flex-direction: column;
 }
@@ -49,7 +51,7 @@
       "button";
   }
 
-  .IngredientsPage__overview__card {
+  .IngredientsPage__overview__content {
     min-height: unset;
   }
 

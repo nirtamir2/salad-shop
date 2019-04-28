@@ -1,3 +1,5 @@
+@import "./../index.css";
+
 .IngredientListItem {
   width: 100%;
   padding: var(--gutter);

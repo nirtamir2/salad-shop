@@ -1,11 +1,43 @@
+@import "./../index.css";
+
 .OrderSummary {
+  display: flex;
+  flex-direction: column;
+}
+
+.OrderSummary__header {
+  padding: var(--gutter) 0;
+
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: var(--gutter);
+
+  border-bottom: thick solid var(--secondary-color);
 }
 
 .OrderSummary__list {
-  padding: 0;
   margin: 0;
+  padding: 0;
+  max-height: var(--order-summary-list-max-height);
+
+  overflow: auto;
+  list-style: none;
+  text-transform: capitalize;
 }
 
-.OrderSummary__totalPrice{
-    margin-top: var(--gutter);
+.OrderSummary__totalPrice {
+  margin-top: calc(var(--gutter) / 2);
+  flex: 1;
+  font-size: var(--big-text-font-size);
+}
+
+.OrderSummary__listItem {
+  padding: var(--gutter) 0;
+  border-bottom: thick solid var(--primary-color);
+
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: var(--gutter);
 }

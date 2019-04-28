@@ -14,14 +14,28 @@ function OrderSummary(props: IProps) {
     <div className="OrderSummary">
       {items.length === 0 ? null : (
         <>
+          <div className="OrderSummary__header">
+            <div>Item</div>
+            <div>Price</div>
+            <div>Quantity</div>
+            <div>Total</div>
+          </div>
           <ul className="OrderSummary__list">
             {items.map(o => {
               const { ingredient, count } = o;
               return (
                 <li key={ingredient.id}>
-                  <div>
-                    {ingredient.title} x {count} = {CURRENCY_SYMBOL}
-                    {(count * ingredient.priceInUsd).toFixed(2)}
+                  <div className="OrderSummary__listItem">
+                    <div>{ingredient.title}</div>
+                    <div>
+                      {CURRENCY_SYMBOL}
+                      {ingredient.priceInUsd}
+                    </div>
+                    <div>{count}</div>
+                    <div>
+                      {CURRENCY_SYMBOL}
+                      {(count * ingredient.priceInUsd).toFixed(2)}
+                    </div>
                   </div>
                 </li>
               );

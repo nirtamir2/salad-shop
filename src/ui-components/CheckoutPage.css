@@ -1,3 +1,5 @@
+@import "./../index.css";
+
 .CheckoutPage {
   margin: var(--gutter);
 
@@ -10,17 +12,29 @@
 }
 
 .CheckoutPage__overview {
-  max-height: 500px;
+  max-height: var(--section-max-height);
   overflow-y: auto;
   grid-area: overview;
 }
 
-.CheckoutPage__overview__card {
-  min-height: calc(500px - 4 * var(--gutter));
+.CheckoutPage__overview__content {
+  min-height: calc(var(--section-max-height) - 4 * var(--gutter));
   display: flex;
   flex-direction: column;
 }
 
+.CheckoutPage__modal__checkoutDetails {
+  padding: var(--gutter) 0;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: var(--gutter);
+}
+
+.CheckoutPage__modal__thanks {
+  margin-bottom: var(--gutter);
+}
+
+.CheckoutPage__modal__button,
 .CheckoutPage__button {
   grid-area: button;
   display: flex;
@@ -33,7 +47,7 @@
 }
 
 .CheckoutPage__formContent {
-  height: calc(500px - var(--gutter) * 4);
+  height: calc(var(--section-max-height) - var(--gutter) * 4);
 
   display: grid;
   grid-template-rows: auto auto 1fr;
@@ -50,7 +64,7 @@
       "button";
   }
 
-  .CheckoutPage__overview__card {
+  .CheckoutPage__overview__content {
     min-height: unset;
   }
 }

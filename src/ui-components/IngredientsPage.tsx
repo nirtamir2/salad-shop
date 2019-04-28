@@ -2,9 +2,9 @@ import React from "react";
 import Button from "../ui-core/Button";
 import Card from "../ui-core/Card";
 import IngredientListItem from "./IngredientListItem";
+import OrderSummaryDetails from "./OrderSummary";
 import { IngredientsContext } from "./IngredientsContext";
 import "./IngredientsPage.css";
-import OrderSummaryDetails from "./OrderSummary";
 
 function IngredientsPage() {
   const ingredientsContext = React.useContext(IngredientsContext);
@@ -41,8 +41,10 @@ function IngredientsPage() {
       )}
       <div className="IngredientsPage__overview">
         <Card>
-          <h2>Order summary</h2>
-          <OrderSummaryDetails order={order} />
+          <div className="IngredientsPage__overview__content">
+            <h2>Order summary</h2>
+            <OrderSummaryDetails order={order} />
+          </div>
         </Card>
       </div>
       <div className="IngredientsPage__button">

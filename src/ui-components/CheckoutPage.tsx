@@ -16,13 +16,10 @@ function CheckoutPage() {
   const [email, setEmail] = React.useState("");
   const [note, setNote] = React.useState("");
 
-  const [shouldOpenModal, setShouldOpenModal] = React.useState(false);
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
   function handleBuy(e: React.FormEvent) {
     e.preventDefault();
-    console.log("name", name);
-    console.log("email", email);
-    console.log("note", note);
-    setShouldOpenModal(true);
+    setIsModalVisible(true);
   }
 
   return (
@@ -59,39 +56,60 @@ function CheckoutPage() {
 
         <div className="CheckoutPage__overview">
           <Card>
-            <h2>Order summary</h2>
-            <OrderSummary order={order} />
+            <div className="CheckoutPage__overview__content">
+              <h2>Order summary</h2>
+              <OrderSummary order={order} />
+            </div>
           </Card>
         </div>
         <div className="CheckoutPage__button">
-          <Button type="submit" disabled={order.items.length === 0}>
+          <Button
+            type="submit"
+            disabled={
+              order.items.length === 0 ||
+              name.length === 0 ||
+              email.length === 0
+            }
+          >
             Buy Now
           </Button>
         </div>
       </form>
 
-      <Modal isVisible={shouldOpenModal}>
+      <Modal isVisible={isModalVisible}>
         <Card>
-          <h2>Summary order</h2>
-          <OrderSummary order={order} />
           <div>
-            <p>name: {name}</p>
-            <p>email: {email}</p>
-            {note == null ? null : <p>note: {note}</p>}
+            <h2>Invoice</h2>
+            <OrderSummary order={order} />
+            <div className="CheckoutPage__modal__checkoutDetails">
+              <div>Name:</div>
+              <div>{name}</div>
+              <div>Email:</div>
+              <div>{email}</div>
+              {note.length === 0 ? null : (
+                <>
+                  <div>Note:</div>
+                  <div>{note}</div>
+                </>
+              )}
+            </div>
+
+            <p className="CheckoutPage__modal__thanks">
+              Thank you! - Delivery is on its way
+            </p>
+
+            <div className="CheckoutPage__modal__button">
+              <Button
+                to="/"
+                onClick={() => {
+                  setIsModalVisible(false);
+                  clearOrder();
+                }}
+              >
+                Close
+              </Button>
+            </div>
           </div>
-          <div>
-            <p>Thank you!</p>
-            <p>Delivery is on its way</p>
-          </div>
-          <Button
-            to="/"
-            onClick={() => {
-              setShouldOpenModal(false);
-              clearOrder();
-            }}
-          >
-            Close
-          </Button>
         </Card>
       </Modal>
     </div>

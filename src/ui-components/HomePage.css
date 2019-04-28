@@ -11,10 +11,10 @@
 
 .HomePage__content {
   display: grid;
+  grid-gap: var(--gutter);
   align-items: center;
   justify-content: center;
   justify-items: center;
-  grid-gap: var(--gutter);
 }
 
 .HomePage-title {

@@ -12,6 +12,9 @@
 
   /* Dimensions */
   --header-height: 50px;
+  --section-max-height: 500px;
+  --order-summary-list-max-height: 300px;
+
   --gutter: var(--text-font-size);
   --border-radius: 5px;
 
